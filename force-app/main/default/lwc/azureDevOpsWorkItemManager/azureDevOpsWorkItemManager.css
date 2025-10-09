@@ -1,0 +1,613 @@
+.azure-workspace {
+    --azure-primary: #0078d4;
+    --azure-secondary: #106ebe;
+    --azure-success: #107c10;
+    --azure-warning: #ff8c00;
+    --azure-error: #d13438;
+    --azure-gradient: linear-gradient(135deg, #0078d4 0%, #106ebe 100%);
+    --shadow-level-1: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --shadow-level-2: 0 4px 8px rgba(0, 0, 0, 0.12);
+    --shadow-level-3: 0 8px 16px rgba(0, 0, 0, 0.15);
+    position: relative;
+    z-index: auto;
+}
+
+/* Header Section */
+.workspace-header {
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 5;
+}
+
+.header-content {
+    padding: 0.75rem 1rem;
+    background: linear-gradient(90deg, rgba(0,120,212,0.95) 0%, rgba(16,110,190,0.9) 100%);
+    color: white;
+    border-radius: 0.5rem;
+    box-shadow: var(--shadow-level-1);
+}
+
+.header-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+}
+
+.header-title {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.header-title h1 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    text-shadow: none;
+}
+
+.header-subtitle {
+    margin: 0.5rem 0 0 0;
+    opacity: 0.9;
+    font-size: 1.1rem;
+}
+
+.header-stats {
+    display: flex;
+    gap: 1rem;
+}
+
+.stat-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 0.5rem;
+    backdrop-filter: blur(10px);
+    min-width: 80px;
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    opacity: 0.9;
+    margin-top: 0.25rem;
+}
+
+.action-bar {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.create-btn,
+.refresh-btn {
+    --slds-c-button-brand-color-background: rgba(255, 255, 255, 0.2);
+    --slds-c-button-brand-color-border: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+.create-btn:hover,
+.refresh-btn:hover {
+    --slds-c-button-brand-color-background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-level-2);
+}
+
+/* Filters Section */
+.filters-section {
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 10;
+}
+
+.filters-content {
+    padding: 1rem;
+    position: relative;
+    z-index: 11;
+}
+
+.filter-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    align-items: end;
+}
+
+.filter-item {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 12;
+}
+
+/* Ensure dropdown menus appear above other content */
+.filter-item lightning-combobox {
+    position: relative;
+    z-index: 1000;
+}
+
+.filter-item lightning-input {
+    position: relative;
+    z-index: 1000;
+}
+
+/* Table Section */
+.table-section {
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 1;
+}
+
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    background: transparent;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+}
+
+.table-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--azure-primary);
+}
+
+.table-container {
+    border-radius: 0 0 0.5rem 0.5rem;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+}
+
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem;
+}
+
+/* Empty State */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    text-align: center;
+    color: #6b7280;
+}
+
+.empty-state lightning-icon {
+    margin-bottom: 1rem;
+    opacity: 0.6;
+}
+
+.empty-state h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    .table-container {
+        border-radius: 0 0 0.5rem 0.5rem;
+        overflow: auto;
+        position: relative;
+        z-index: 1;
+        max-height: var(--manager-table-height, 420px);
+        box-shadow: var(--shadow-level-1);
+        background: white;
+    }
+}
+
+.empty-state p {
+    margin: 0 0 2rem 0;
+    font-size: 1rem;
+    max-width: 400px;
+}
+
+/* Modal Styling */
+.slds-modal__header {
+    background: var(--azure-gradient);
+    color: white;
+    border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.slds-modal__header h2 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.slds-modal__close {
+    color: white !important;
+    .empty-state {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 2.25rem 1.25rem;
+        text-align: center;
+        color: #6b7280;
+        background: #ffffff;
+        border-radius: 0.5rem;
+        box-shadow: var(--shadow-level-1);
+    }
+
+    .empty-state h3 {
+        margin: 0 0 0.5rem 0;
+        font-size: 1.125rem;
+        font-weight: 600;
+    }
+    .empty-state p {
+        margin: 0 0 1.25rem 0;
+        font-size: 0.95rem;
+        max-width: 420px;
+    }
+}
+
+/* Fix dropdown z-index issues */
+.azure-workspace .slds-dropdown,
+.azure-workspace .slds-dropdown-trigger,
+.azure-workspace .slds-combobox,
+.azure-workspace .slds-combobox__dropdown {
+    z-index: 9999 !important;
+}
+
+.azure-workspace .slds-combobox__dropdown-list {
+    z-index: 9999 !important;
+}
+
+/* Ensure proper stacking for Lightning components */
+.azure-workspace lightning-combobox,
+.azure-workspace lightning-input {
+    isolation: isolate;
+}
+
+/* Prevent lightning cards from creating stacking context issues */
+.azure-workspace lightning-card {
+    position: relative;
+    overflow: visible;
+}
+
+/* Ensure filter section remains above table content */
+.filters-section lightning-card {
+    overflow: visible !important;
+}
+
+.filters-section .slds-card {
+    overflow: visible !important;
+}
+
+/* Status and Priority Classes */
+.priority-high {
+    color: var(--azure-error) !important;
+    font-weight: 600;
+}
+
+.priority-medium {
+    color: var(--azure-warning) !important;
+    font-weight: 500;
+}
+
+.priority-low {
+    color: #6b7280 !important;
+}
+
+.state-active {
+    color: var(--azure-success) !important;
+    font-weight: 500;
+}
+
+.state-completed {
+    color: var(--azure-success) !important;
+}
+
+.state-new {
+    color: var(--azure-primary) !important;
+}
+
+/* Floating Particles Background */
+.azure-workspace::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background-image: 
+        radial-gradient(2px 2px at 20px 30px, rgba(255, 255, 255, 0.3), transparent),
+        radial-gradient(2px 2px at 40px 70px, rgba(102, 126, 234, 0.4), transparent),
+        radial-gradient(1px 1px at 90px 40px, rgba(118, 75, 162, 0.3), transparent),
+        radial-gradient(1px 1px at 130px 80px, rgba(64, 224, 208, 0.3), transparent);
+    background-repeat: repeat;
+    background-size: 150px 150px;
+    animation: particle-float 20s linear infinite;
+    z-index: -100;
+}
+
+@keyframes particle-float {
+    0% { transform: translateY(0px) translateX(0px); }
+    33% { transform: translateY(-10px) translateX(5px); }
+    66% { transform: translateY(-5px) translateX(-5px); }
+    100% { transform: translateY(0px) translateX(0px); }
+}
+
+/* Hover Effects for Cards */
+.workspace-header:hover .header-content,
+.filters-section:hover lightning-card,
+.table-section:hover lightning-card {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-level-4), 0 0 30px rgba(102, 126, 234, 0.2);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Gradient Text Effects */
+.gradient-text {
+    background: linear-gradient(135deg, var(--azure-primary), var(--azure-tertiary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .header-info {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .header-stats {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .filter-row {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .action-bar {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .stat-card {
+        min-width: 100px;
+        padding: 1rem;
+    }
+
+    .stat-number {
+        font-size: 2rem;
+    }
+
+    .header-title h1 {
+        font-size: 1.75rem;
+    }
+
+    .table-title {
+        font-size: 1.25rem;
+    }
+
+    .azure-workspace {
+        padding: 0.5rem;
+    }
+
+    .workspace-header,
+    .filters-section,
+    .table-section {
+        margin-bottom: 1rem;
+    }
+}
+
+/* Animation Effects */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.workspace-header,
+.filters-section,
+.table-section {
+    animation: slideIn 0.3s ease-out;
+}
+
+/* Hover Effects */
+.stat-card {
+    transition: all 0.2s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.3);
+}
+
+lightning-button {
+    transition: all 0.2s ease;
+}
+
+/* Loading States */
+.loading-overlay {
+    position: relative;
+}
+
+.loading-overlay::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(2px);
+    z-index: 10;
+}
+
+/* Custom scrollbar */
+.table-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.table-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+    background: var(--azure-primary);
+    border-radius: 4px;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+    background: var(--azure-secondary);
+}
+
+/* Advanced Animation Effects */
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.workspace-header {
+    animation: fade-in-up 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.filters-section {
+    animation: fade-in-up 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s both;
+}
+
+.table-section {
+    animation: fade-in-up 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.4s both;
+}
+
+/* Staggered Animation for Stats */
+.stat-card:nth-child(1) { animation: fade-in-up 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.1s both; }
+.stat-card:nth-child(2) { animation: fade-in-up 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.2s both; }
+.stat-card:nth-child(3) { animation: fade-in-up 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.3s both; }
+
+/* Ripple Effect for Buttons */
+.create-btn,
+.refresh-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.create-btn::after,
+.refresh-btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.create-btn:active::after,
+.refresh-btn:active::after {
+    width: 300px;
+    height: 300px;
+}
+
+/* Glow Effects */
+.glow-primary {
+    box-shadow: 0 0 20px var(--azure-primary), 0 0 40px var(--azure-primary), 0 0 60px var(--azure-primary);
+    animation: glow-pulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow-pulse {
+    from { box-shadow: 0 0 10px var(--azure-primary), 0 0 20px var(--azure-primary), 0 0 30px var(--azure-primary); }
+    to { box-shadow: 0 0 20px var(--azure-primary), 0 0 30px var(--azure-primary), 0 0 40px var(--azure-primary); }
+}
+
+/* Morphing Background */
+.morphing-bg {
+    background: linear-gradient(-45deg, #667eea, #764ba2, #667eea, #f093fb);
+    background-size: 400% 400%;
+    animation: gradient-morph 15s ease infinite;
+}
+
+@keyframes gradient-morph {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Text Typing Effect */
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent; }
+    50% { border-color: var(--azure-tertiary); }
+}
+
+/* Spotlight Effect */
+.spotlight {
+    position: relative;
+    overflow: hidden;
+}
+
+.spotlight::before {
+    content: '';
+    position: absolute;
+    top: -100%;
+    left: -100%;
+    width: 300%;
+    height: 300%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+    animation: spotlight-move 8s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes spotlight-move {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Premium Glass Cards */
+.premium-glass {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.1);
+}

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>Azure Work Item Type</label>
+    <pluralLabel>Azure Work Item Types</pluralLabel>
+    <visibility>Public</visibility>
+    <fields>
+        <fullName>Description__c</fullName>
+        <label>Description</label>
+        <description>Description of this work item type</description>
+        <type>LongTextArea</type>
+        <length>1000</length>
+        <visibleLines>3</visibleLines>
+        <required>false</required>
+    </fields>
+    <fields>
+        <fullName>Default_State__c</fullName>
+        <label>Default State</label>
+        <description>Default state for new work items of this type</description>
+        <type>Text</type>
+        <length>100</length>
+        <required>false</required>
+    </fields>
+    <fields>
+        <fullName>Icon_Name__c</fullName>
+        <label>Icon Name</label>
+        <description>SLDS icon name (e.g., standard:task, standard:bug)</description>
+        <type>Text</type>
+        <length>100</length>
+        <required>false</required>
+    </fields>
+    <fields>
+        <fullName>Connection__c</fullName>
+        <label>Connection</label>
+        <description>Related Azure DevOps connection developer name (optional)</description>
+        <type>Text</type>
+        <length>100</length>
+        <required>false</required>
+    </fields>
+    <fields>
+        <fullName>IsActive__c</fullName>
+        <label>Is Active</label>
+        <description>Indicates if this work item type is active</description>
+        <type>Checkbox</type>
+        <defaultValue>true</defaultValue>
+    </fields>
+</CustomObject>

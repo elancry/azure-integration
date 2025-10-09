@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+	<labels>
+		<fullName>SalesSummary_Title</fullName>
+		<categories>Sales Summary</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>Card title</shortDescription>
+		<value>Sales Summary</value>
+	</labels>
+	<labels>
+		<fullName>SalesSummary_PickerLabel</fullName>
+		<categories>Sales Summary</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>User picker label</shortDescription>
+		<value>Select Sales Representative</value>
+	</labels>
+	<labels>
+		<fullName>SalesSummary_Refresh</fullName>
+		<categories>Sales Summary</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>Refresh button</shortDescription>
+		<value>Refresh</value>
+	</labels>
+	<labels>
+		<fullName>SalesSummary_ColumnMonth</fullName>
+		<categories>Sales Summary</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>Month column</shortDescription>
+		<value>Month</value>
+	</labels>
+	<labels>
+		<fullName>SalesSummary_ColumnAmount</fullName>
+		<categories>Sales Summary</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>Amount column</shortDescription>
+		<value>Amount</value>
+	</labels>
+	<labels>
+		<fullName>SalesSummary_Empty</fullName>
+		<categories>Sales Summary</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>Empty data message</shortDescription>
+		<value>No sales data available</value>
+	</labels>
+	<labels>
+		<fullName>SalesSummary_Error</fullName>
+		<categories>Sales Summary</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>Error message</shortDescription>
+		<value>Error loading data</value>
+	</labels>
+	<labels>
+		<fullName>SalesSummary_LegendNoSales</fullName>
+		<categories>Sales Summary</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>Legend for no sales</shortDescription>
+		<value>Months with no sales are highlighted</value>
+	</labels>
+	<labels>
+		<fullName>SalesSummary_Err_UserAccessDenied</fullName>
+		<categories>Sales Summary Errors</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>User access denied error</shortDescription>
+		<value>User access denied</value>
+	</labels>
+	<labels>
+		<fullName>SalesSummary_Err_UnexpectedError</fullName>
+		<categories>Sales Summary Errors</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>Unexpected error message</shortDescription>
+		<value>An unexpected error occurred</value>
+	</labels>
+	<labels>
+		<fullName>SalesSummary_Err_AccessValidationFailed</fullName>
+		<categories>Sales Summary Errors</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>Access validation failed</shortDescription>
+		<value>Access validation failed</value>
+	</labels>
+	<labels>
+		<fullName>SalesSummary_Err_QueryFailed</fullName>
+		<categories>Sales Summary Errors</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>Query execution failed</shortDescription>
+		<value>Failed to retrieve sales data</value>
+	</labels>
+	<labels>
+		<fullName>SalesSummary_Err_UnexpectedSelectorError</fullName>
+		<categories>Sales Summary Errors</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>Unexpected selector error</shortDescription>
+		<value>Unexpected error occurred</value>
+	</labels>
+	<labels>
+		<fullName>SalesSummary_Err_UserIdRequired</fullName>
+		<categories>Sales Summary Errors</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>User ID is required</shortDescription>
+		<value>User Id is required</value>
+	</labels>
+	<labels>
+		<fullName>SalesSummary_Err_StartWindowRequired</fullName>
+		<categories>Sales Summary Errors</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>Start window is required</shortDescription>
+		<value>Start of window is required</value>
+	</labels>
+	<labels>
+		<fullName>SalesSummary_Err_SalesObjectAccessDenied</fullName>
+		<categories>Sales Summary Errors</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>Sales object access denied</shortDescription>
+		<value>Access denied to Sales object</value>
+	</labels>
+	<labels>
+		<fullName>SalesSummary_Err_FieldAccessDenied</fullName>
+		<categories>Sales Summary Errors</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>Field access denied</shortDescription>
+		<value>Access denied to required fields</value>
+	</labels>
+	<labels>
+		<fullName>SalesSummary_Log_ControllerError</fullName>
+		<categories>Sales Summary Logging</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>Controller error log message</shortDescription>
+		<value>SalesSummaryController.getMonthlyTotals: Unexpected error - {0}</value>
+	</labels>
+	<labels>
+		<fullName>SalesSummary_Log_AccessValidationFailed</fullName>
+		<categories>Sales Summary Logging</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>Access validation failed log</shortDescription>
+		<value>SalesSummaryController.isValidUserAccess: Access validation failed - {0}</value>
+	</labels>
+	<labels>
+		<fullName>SalesSummary_Log_SelectorQueryFailed</fullName>
+		<categories>Sales Summary Logging</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>Selector query failed log</shortDescription>
+		<value>SalesTransactionSelector.getMonthlySumsByOwner: Query failed - {0}</value>
+	</labels>
+	<labels>
+		<fullName>SalesSummary_Log_SelectorUnexpectedError</fullName>
+		<categories>Sales Summary Logging</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>Selector unexpected error log</shortDescription>
+		<value>SalesTransactionSelector.getMonthlySumsByOwner: Unexpected error - {0}</value>
+	</labels>
+	<labels>
+		<fullName>SalesSummary_Help_PickerDescription</fullName>
+		<categories>Sales Summary Help</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>Help text for user picker</shortDescription>
+		<value>Select a sales representative to view their monthly sales totals</value>
+	</labels>
+	<labels>
+		<fullName>SalesSummary_Help_RefreshButton</fullName>
+		<categories>Sales Summary Help</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>Help text for refresh button</shortDescription>
+		<value>Refresh sales data</value>
+	</labels>
+	<labels>
+		<fullName>SalesSummary_Help_EmptyState</fullName>
+		<categories>Sales Summary Help</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>Help text for empty state</shortDescription>
+		<value>Try selecting a different sales representative or check back later</value>
+	</labels>
+	<labels>
+		<fullName>SalesSummary_Help_ErrorState</fullName>
+		<categories>Sales Summary Help</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>Help text for error state</shortDescription>
+		<value>Please try refreshing the data or contact your administrator</value>
+	</labels>
+	<labels>
+		<fullName>SalesSummary_Loading_Message</fullName>
+		<categories>Sales Summary Loading</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>Loading message</shortDescription>
+		<value>Retrieving monthly sales totals...</value>
+	</labels>
+	<labels>
+		<fullName>SalesSummary_Summary_DataCount</fullName>
+		<categories>Sales Summary Summary</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>Data count summary</shortDescription>
+		<value>Displaying {0} months of data</value>
+	</labels>
+	<labels>
+		<fullName>SalesSummary_State_Loading</fullName>
+		<categories>Sales Summary States</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>Loading state description</shortDescription>
+		<value>Loading sales data</value>
+	</labels>
+	<labels>
+		<fullName>SalesSummary_State_Success</fullName>
+		<categories>Sales Summary States</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>Success state description</shortDescription>
+		<value>{0} months of data displayed</value>
+	</labels>
+	<labels>
+		<fullName>SalesSummary_State_Empty</fullName>
+		<categories>Sales Summary States</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>Empty state description</shortDescription>
+		<value>No sales data available</value>
+	</labels>
+	<labels>
+		<fullName>SalesSummary_State_Error</fullName>
+		<categories>Sales Summary States</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>Error state description</shortDescription>
+		<value>Error loading data</value>
+	</labels>
+	<labels>
+		<fullName>SalesSummary_State_Ready</fullName>
+		<categories>Sales Summary States</categories>
+		<language>en_US</language>
+		<protected>false</protected>
+		<shortDescription>Ready state description</shortDescription>
+		<value>Ready</value>
+	</labels>
+</CustomLabels>

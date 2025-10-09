@@ -1,0 +1,182 @@
+<template>
+    <lightning-modal-header label={title}></lightning-modal-header>
+
+    <lightning-modal-body>
+        <div class="slds-p-around_medium">
+            <!-- CONFIRM TYPE: Simple confirmation with optional reason -->
+            <template if:true={isConfirmType}>
+                <div class="slds-m-bottom_medium">
+                    <p class="slds-text-body_regular">{message}</p>
+                </div>
+                
+                <template if:true={requireReason}>
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label">
+                            <abbr class="slds-required" title="required">*</abbr>
+                            Reason
+                        </label>
+                        <div class="slds-form-element__control">
+                            <lightning-textarea
+                                name="reason"
+                                value={reason}
+                                onchange={handleReasonChange}
+                                placeholder="Please provide a reason"
+                                required>
+                            </lightning-textarea>
+                        </div>
+                    </div>
+                </template>
+            </template>
+
+            <!-- LIST TYPE: Data table display -->
+            <template if:true={isListType}>
+                <template if:true={hasData}>
+                    <div style={maxHeight} class="slds-scrollable_y">
+                        <lightning-datatable
+                            key-field={keyField}
+                            data={data}
+                            columns={columns}
+                            hide-checkbox-column="true"
+                            onrowaction={handleRowAction}>
+                        </lightning-datatable>
+                    </div>
+                </template>
+                <template if:false={hasData}>
+                    <div class="slds-text-align_center slds-p-vertical_large">
+                        <lightning-icon icon-name="utility:info" size="small"></lightning-icon>
+                        <p class="slds-m-top_small">No data available</p>
+                    </div>
+                </template>
+            </template>
+
+            <!-- FORM TYPE: Dynamic form fields -->
+            <template if:true={isFormType}>
+                <div class="slds-form" role="list">
+                    <template for:each={formFields} for:item="field">
+                        <div key={field.name} class="slds-form-element slds-m-bottom_medium">
+                            <!-- Text Input -->
+                            <template if:true={field.isText}>
+                                <label class="slds-form-element__label">
+                                    <template if:true={field.icon}>
+                                        <lightning-icon icon-name={field.icon} size="x-small"></lightning-icon>
+                                    </template>
+                                    <template if:true={field.required}>
+                                        <abbr class="slds-required" title="required">*</abbr>
+                                    </template>
+                                    {field.label}
+                                </label>
+                                <div class="slds-form-element__control">
+                                    <lightning-input
+                                        name={field.name}
+                                        type="text"
+                                        value={field.value}
+                                        placeholder={field.placeholder}
+                                        required={field.required}
+                                        onchange={handleFieldChange}
+                                        data-field-name={field.name}>
+                                    </lightning-input>
+                                </div>
+                            </template>
+
+                            <!-- Textarea -->
+                            <template if:true={field.isTextarea}>
+                                <label class="slds-form-element__label">
+                                    <template if:true={field.icon}>
+                                        <lightning-icon icon-name={field.icon} size="x-small"></lightning-icon>
+                                    </template>
+                                    <template if:true={field.required}>
+                                        <abbr class="slds-required" title="required">*</abbr>
+                                    </template>
+                                    {field.label}
+                                </label>
+                                <div class="slds-form-element__control">
+                                    <lightning-textarea
+                                        name={field.name}
+                                        value={field.value}
+                                        placeholder={field.placeholder}
+                                        required={field.required}
+                                        rows={field.rows}
+                                        onchange={handleFieldChange}
+                                        data-field-name={field.name}>
+                                    </lightning-textarea>
+                                </div>
+                            </template>
+
+                            <!-- Combobox/Picklist -->
+                            <template if:true={field.isCombobox}>
+                                <label class="slds-form-element__label">
+                                    <template if:true={field.icon}>
+                                        <lightning-icon icon-name={field.icon} size="x-small"></lightning-icon>
+                                    </template>
+                                    <template if:true={field.required}>
+                                        <abbr class="slds-required" title="required">*</abbr>
+                                    </template>
+                                    {field.label}
+                                </label>
+                                <div class="slds-form-element__control">
+                                    <lightning-combobox
+                                        name={field.name}
+                                        value={field.value}
+                                        placeholder={field.placeholder}
+                                        options={field.options}
+                                        required={field.required}
+                                        onchange={handleFieldChange}
+                                        data-field-name={field.name}>
+                                    </lightning-combobox>
+                                </div>
+                            </template>
+
+                            <!-- Help text -->
+                            <template if:true={field.helpText}>
+                                <div class="slds-form-element__help">
+                                    <lightning-icon icon-name="utility:info" size="xx-small"></lightning-icon>
+                                    {field.helpText}
+                                </div>
+                            </template>
+                        </div>
+                    </template>
+                </div>
+
+                <!-- Loading spinner for form submission -->
+                <template if:true={loading}>
+                    <div class="slds-spinner_container">
+                        <lightning-spinner alternative-text="Processing..." size="small"></lightning-spinner>
+                    </div>
+                </template>
+            </template>
+
+            <!-- CUSTOM TYPE: Slot for custom content -->
+            <template if:true={isCustomType}>
+                <div class="custom-content">
+                    <slot></slot>
+                </div>
+            </template>
+        </div>
+    </lightning-modal-body>
+
+    <lightning-modal-footer>
+        <!-- Single button for list type -->
+        <template if:true={isListType}>
+            <lightning-button 
+                variant="brand" 
+                label="Close"
+                onclick={handleConfirm}>
+            </lightning-button>
+        </template>
+
+        <!-- Cancel + Confirm for confirm/form types -->
+        <template if:false={isListType}>
+            <lightning-button 
+                variant="neutral" 
+                label={cancelLabel}
+                onclick={handleCancel}>
+            </lightning-button>
+            <lightning-button 
+                variant={confirmButtonVariant}
+                label={confirmLabel}
+                onclick={handleConfirm}
+                disabled={isConfirmDisabled}>
+            </lightning-button>
+        </template>
+    </lightning-modal-footer>
+</template>

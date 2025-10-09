@@ -1,0 +1,87 @@
+<template>
+    <lightning-modal-header label={modalTitle}></lightning-modal-header>
+
+    <lightning-modal-body>
+        <div class="slds-p-around_medium">
+            <lightning-spinner if:true={isLoading} alternative-text="Updating work item..."></lightning-spinner>
+            
+            <div class="slds-form" role="list">
+                <!-- Title Field -->
+                <lightning-input 
+                    label="Title"
+                    name="title"
+                    value={title}
+                    onchange={handleInputChange}
+                    required
+                    class="slds-m-bottom_small">
+                </lightning-input>
+                
+                <!-- Description Field -->
+                <lightning-textarea
+                    label="Description"
+                    name="description"
+                    value={description}
+                    onchange={handleInputChange}
+                    rows="5"
+                    class="slds-m-bottom_small">
+                </lightning-textarea>
+                
+                <!-- State Field -->
+                <lightning-combobox
+                    label="State"
+                    name="state"
+                    value={selectedState}
+                    options={stateOptions}
+                    onchange={handleStateChange}
+                    placeholder="Select State"
+                    class="slds-m-bottom_small">
+                </lightning-combobox>
+                
+                <template if:true={selectedStateDescription}>
+                    <div class="slds-text-color_weak slds-m-bottom_small slds-m-left_small">
+                        <lightning-icon icon-name="utility:info" size="xx-small" class="slds-m-right_xx-small"></lightning-icon>
+                        {selectedStateDescription}
+                    </div>
+                </template>
+                
+                <!-- Priority Field -->
+                <lightning-combobox
+                    label="Priority"
+                    name="priority"
+                    value={selectedPriority}
+                    options={priorityOptions}
+                    onchange={handlePriorityChange}
+                    placeholder="Select Priority"
+                    class="slds-m-bottom_small">
+                </lightning-combobox>
+            </div>
+            
+            <!-- Change Indicator -->
+            <template if:false={hasChanges}>
+                <div class="slds-m-top_small slds-text-color_weak slds-text-align_center">
+                    <lightning-icon icon-name="utility:info" size="x-small"></lightning-icon>
+                    No changes detected
+                </div>
+            </template>
+        </div>
+    </lightning-modal-body>
+
+    <lightning-modal-footer>
+        <lightning-button 
+            variant="neutral" 
+            label="Reset Changes"
+            onclick={handleReset}>
+        </lightning-button>
+        <lightning-button 
+            variant="neutral" 
+            label="Cancel"
+            onclick={handleCancel}>
+        </lightning-button>
+        <lightning-button 
+            variant="brand" 
+            label="Save Changes"
+            onclick={handleSave}
+            disabled={isSaveDisabled}>
+        </lightning-button>
+    </lightning-modal-footer>
+</template>

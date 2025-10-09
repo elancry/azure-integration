@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>64.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Azure DevOps Manager</masterLabel>
+    <description>Primary Azure DevOps work item management interface with comprehensive data table, filtering, search, and modal creation capabilities for the home page.</description>
+    <targets>
+        <target>lightning__AppPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightning__Tab</target>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__AppPage,lightning__HomePage">
+            <property name="maxRows" type="Integer" default="10" label="Max Rows" description="Maximum number of rows to display"/>
+            <property name="showHeader" type="Boolean" default="true" label="Show Header" description="Show table header"/>
+            <property name="showFilters" type="Boolean" default="true" label="Show Filters" description="Show filter controls"/>
+            <property name="height" type="String" default="400px" label="Height" description="Component height"/>
+            <property name="defaultConfiguration" type="String" default="standard" label="Default Configuration" description="Default component configuration"/>
+            <supportedFormFactors>
+                <supportedFormFactor type="Large" />
+                <supportedFormFactor type="Small" />
+            </supportedFormFactors>
+        </targetConfig>
+        <targetConfig targets="lightning__RecordPage">
+            <property name="maxRows" type="Integer" default="10" label="Max Rows" description="Maximum number of rows to display"/>
+            <property name="showHeader" type="Boolean" default="true" label="Show Header" description="Show table header"/>
+            <property name="showFilters" type="Boolean" default="true" label="Show Filters" description="Show filter controls"/>
+            <property name="height" type="String" default="400px" label="Height" description="Component height"/>
+            <property name="defaultConfiguration" type="String" default="standard" label="Default Configuration" description="Default component configuration"/>
+            <supportedFormFactors>
+                <supportedFormFactor type="Large" />
+                <supportedFormFactor type="Small" />
+            </supportedFormFactors>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

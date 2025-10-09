@@ -1,0 +1,150 @@
+<template>
+    <div class="azure-workspace">
+        <!-- Header Section -->
+        <div class="workspace-header">
+            <lightning-card>
+                <div class="header-content">
+                    <div class="header-info">
+                        <div class="header-title">
+                            <lightning-icon icon-name="custom:custom63" size="medium"></lightning-icon>
+                            <div>
+                                <h1>Azure DevOps Work Items</h1>
+                                <p class="header-subtitle">Manage and track work items across your Azure DevOps projects</p>
+                            </div>
+                        </div>
+                        <div class="header-stats" if:true={workItemStats}>
+                            <div class="stat-card">
+                                <span class="stat-number">{workItemStats.total}</span>
+                                <span class="stat-label">Total Items</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-number">{workItemStats.inProgress}</span>
+                                <span class="stat-label">In Progress</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-number">{workItemStats.completed}</span>
+                                <span class="stat-label">Completed</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Action Bar -->
+                    <div class="action-bar">
+                        <lightning-button 
+                            variant="brand" 
+                            label="Create Work Item"
+                            icon-name="utility:add"
+                            onclick={handleCreateWorkItem}
+                            disabled={createDisabled}
+                            class="create-btn">
+                        </lightning-button>
+                        <lightning-button 
+                            variant="neutral" 
+                            label="Refresh"
+                            icon-name="utility:refresh"
+                            onclick={handleRefresh}
+                            class="refresh-btn">
+                        </lightning-button>
+                    </div>
+                </div>
+            </lightning-card>
+        </div>
+
+        <!-- Filters Section -->
+        <div class="filters-section">
+            <lightning-card title="Filters" icon-name="utility:filterList">
+                <div class="filters-content">
+                    <div class="filter-row">
+                        <div class="filter-item">
+                            <lightning-combobox
+                                name="configFilter"
+                                label="Configuration"
+                                value={selectedConfig}
+                                placeholder="Select Configuration"
+                                options={configOptions}
+                                onchange={handleConfigFilterChange}>
+                            </lightning-combobox>
+                        </div>
+                        <div class="filter-item">
+                            <lightning-combobox
+                                name="typeFilter"
+                                label="Work Item Type"
+                                value={selectedTypeFilter}
+                                placeholder="All Types"
+                                options={typeFilterOptions}
+                                onchange={handleTypeFilterChange}>
+                            </lightning-combobox>
+                        </div>
+                        <div class="filter-item">
+                            <lightning-combobox
+                                name="stateFilter"
+                                label="State"
+                                value={selectedStateFilter}
+                                placeholder="All States"
+                                options={stateFilterOptions}
+                                onchange={handleStateFilterChange}>
+                            </lightning-combobox>
+                        </div>
+                        <div class="filter-item">
+                            <lightning-input
+                                name="search"
+                                type="search"
+                                label="Search"
+                                value={searchTerm}
+                                placeholder="Search work items..."
+                                onchange={handleSearchChange}>
+                            </lightning-input>
+                        </div>
+                    </div>
+                </div>
+            </lightning-card>
+        </div>
+
+        <!-- Work Items Table -->
+        <div class="table-section">
+            <lightning-card>
+                <div class="table-header">
+                    <h3 class="table-title">
+                        <lightning-icon icon-name="standard:work_type_group" size="small"></lightning-icon>
+                        Work Items ({filteredWorkItems.length})
+                    </h3>
+                </div>
+                
+                <!-- Loading State -->
+                <div if:true={isLoading} class="loading-container">
+                    <lightning-spinner alternative-text="Loading work items..." size="medium"></lightning-spinner>
+                </div>
+
+                <!-- Data Table -->
+                <div if:false={isLoading} class="table-container">
+                    <lightning-datatable
+                        key-field="id"
+                        data={filteredWorkItems}
+                        columns={columns}
+                        onrowaction={handleRowAction}
+                        hide-checkbox-column="true"
+                        show-row-number-column="true"
+                        resize-column-disabled="false"
+                        sorted-by={sortedBy}
+                        sorted-direction={sortedDirection}
+                        onsort={handleSort}>
+                    </lightning-datatable>
+                </div>
+
+                <!-- Empty State -->
+                <div if:true={showEmptyState} class="empty-state">
+                    <lightning-icon icon-name="custom:custom63" size="large"></lightning-icon>
+                    <h3>No Work Items Found</h3>
+                    <p>Try adjusting your filters or create a new work item to get started.</p>
+                    <lightning-button 
+                        variant="brand" 
+                        label="Create First Work Item"
+                        icon-name="utility:add"
+                        onclick={handleCreateWorkItem}
+                        disabled={createDisabled}>
+                    </lightning-button>
+                </div>
+            </lightning-card>
+        </div>
+    </div>
+</template>

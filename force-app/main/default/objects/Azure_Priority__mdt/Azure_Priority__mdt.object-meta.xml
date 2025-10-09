@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>Azure Priority</label>
+    <pluralLabel>Azure Priorities</pluralLabel>
+    <visibility>Public</visibility>
+    <fields>
+        <fullName>Priority_Value__c</fullName>
+        <label>Priority Value</label>
+        <description>Numeric priority value (1=highest, 4=lowest)</description>
+        <type>Number</type>
+        <precision>2</precision>
+        <scale>0</scale>
+        <required>true</required>
+    </fields>
+    <fields>
+        <fullName>Ui_Class__c</fullName>
+        <label>UI Class</label>
+        <description>CSS class for styling (e.g., slds-text-color_error for critical)</description>
+        <type>Text</type>
+        <length>100</length>
+        <required>false</required>
+    </fields>
+    <fields>
+        <fullName>Sort_Order__c</fullName>
+        <label>Sort Order</label>
+        <description>Display order for priorities</description>
+        <type>Number</type>
+        <precision>3</precision>
+        <scale>0</scale>
+        <required>false</required>
+    </fields>
+    <fields>
+        <fullName>IsActive__c</fullName>
+        <label>Is Active</label>
+        <description>Indicates if this priority is active</description>
+        <type>Checkbox</type>
+        <defaultValue>true</defaultValue>
+    </fields>
+</CustomObject>

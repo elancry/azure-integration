@@ -1,0 +1,170 @@
+<template>
+    <lightning-modal-header label={modalTitle}></lightning-modal-header>
+
+    <lightning-modal-body>
+        <div class="slds-p-around_medium">
+            <!-- Configuration Section -->
+            <div class="config-section">
+                <div class="config-header">
+                    <lightning-icon icon-name="standard:settings" size="small"></lightning-icon>
+                    <h3>Environment Configuration</h3>
+                </div>
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label">
+                        <lightning-icon icon-name="utility:connected_apps" size="x-small"></lightning-icon>
+                        <abbr class="slds-required" title="required">*</abbr>
+                        Azure DevOps Configuration
+                    </label>
+                    <div class="slds-form-element__control">
+                        <lightning-combobox
+                            name="configuration"
+                            label=""
+                            value={selectedConfig}
+                            placeholder="Select Configuration"
+                            options={configOptions}
+                            onchange={handleConfigChange}>
+                        </lightning-combobox>
+                    </div>
+                    <div class="slds-form-element__help" if:true={selectedConfigDetails}>
+                        <lightning-icon icon-name="utility:info" size="xx-small"></lightning-icon>
+                        Organization: {selectedConfigDetails.organization} | Project: {selectedConfigDetails.project}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Work Item Type Section -->
+            <div class="workitem-section">
+                <div class="workitem-header">
+                    <lightning-icon icon-name="standard:work_type_group" size="small"></lightning-icon>
+                    <h3>Work Item Details</h3>
+                </div>
+                <div class="form-row">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label">
+                            <lightning-icon icon-name="utility:task" size="x-small"></lightning-icon>
+                            <abbr class="slds-required" title="required">*</abbr>
+                            Work Item Type
+                        </label>
+                        <div class="slds-form-element__control">
+                            <lightning-combobox
+                                name="workItemType"
+                                label=""
+                                value={selectedWorkItemType}
+                                placeholder="Select Work Item Type"
+                                options={workItemTypeOptions}
+                                onchange={handleWorkItemTypeChange}>
+                            </lightning-combobox>
+                        </div>
+                        <div class="slds-form-element__help" if:true={selectedWorkItemTypeDescription}>
+                            <lightning-icon icon-name="utility:info" size="xx-small"></lightning-icon>
+                            {selectedWorkItemTypeDescription}
+                        </div>
+                    </div>
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label">
+                            <lightning-icon icon-name="utility:priority" size="x-small"></lightning-icon>
+                            Priority
+                        </label>
+                        <div class="slds-form-element__control">
+                            <lightning-combobox
+                                name="priority"
+                                label=""
+                                value={selectedPriority}
+                                placeholder="Select Priority"
+                                options={priorityOptions}
+                                onchange={handlePriorityChange}>
+                            </lightning-combobox>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Form Content Section -->
+            <div class="form-section">
+                <div class="form-row single">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label">
+                            <lightning-icon icon-name="utility:text" size="x-small"></lightning-icon>
+                            <abbr class="slds-required" title="required">*</abbr>
+                            Title
+                        </label>
+                        <div class="slds-form-element__control">
+                            <lightning-input
+                                name="title"
+                                type="text"
+                                label=""
+                                value={title}
+                                onchange={handleInputChange}
+                                placeholder="Enter work item title"
+                                required
+                                maxlength="255">
+                            </lightning-input>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row single">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label">
+                            <lightning-icon icon-name="utility:description" size="x-small"></lightning-icon>
+                            Description
+                        </label>
+                        <div class="slds-form-element__control">
+                            <lightning-textarea
+                                name="description"
+                                label=""
+                                value={description}
+                                onchange={handleInputChange}
+                                placeholder="Enter detailed description (optional)"
+                                rows="4">
+                            </lightning-textarea>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label">
+                            <lightning-icon icon-name="utility:workflow" size="x-small"></lightning-icon>
+                            Initial State
+                        </label>
+                        <div class="slds-form-element__control">
+                            <lightning-combobox
+                                name="state"
+                                label=""
+                                value={selectedState}
+                                placeholder="Select Initial State"
+                                options={stateOptions}
+                                onchange={handleStateChange}>
+                            </lightning-combobox>
+                        </div>
+                        <div class="slds-form-element__help" if:true={selectedStateDescription}>
+                            <lightning-icon icon-name="utility:info" size="xx-small"></lightning-icon>
+                            {selectedStateDescription}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Loading Spinner -->
+            <div if:true={isLoading} class="slds-spinner_container">
+                <div class="modern-spinner"></div>
+            </div>
+        </div>
+    </lightning-modal-body>
+
+    <lightning-modal-footer>
+        <lightning-button 
+            variant="neutral" 
+            label="Cancel"
+            onclick={handleCancel}>
+        </lightning-button>
+        <lightning-button 
+            variant="brand" 
+            label={createButtonLabel}
+            onclick={handleCreateWorkItem}
+            disabled={isCreateDisabled}
+            icon-name="utility:add">
+        </lightning-button>
+    </lightning-modal-footer>
+</template>

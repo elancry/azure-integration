@@ -1,0 +1,20 @@
+{
+  "extends": ["@salesforce/eslint-config-lwc/recommended"],
+  "overrides": [
+    {
+      "files": ["*.js"],
+      "rules": {
+        "@lwc/lwc/no-async-await": "off",
+        "@lwc/lwc/no-leading-uppercase-api-name": "off"
+      }
+    }
+  ],
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2021,
+    "sourceType": "module"
+  }
+}

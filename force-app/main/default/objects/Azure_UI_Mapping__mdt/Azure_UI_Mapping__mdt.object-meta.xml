@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>Azure UI Mapping</label>
+    <pluralLabel>Azure UI Mappings</pluralLabel>
+    <visibility>Public</visibility>
+    <fields>
+        <fullName>Context__c</fullName>
+        <label>Context</label>
+        <description>UI context (e.g., workItemType, state, priority)</description>
+        <type>Text</type>
+        <length>50</length>
+        <required>true</required>
+    </fields>
+    <fields>
+        <fullName>Key__c</fullName>
+        <label>Key</label>
+        <description>Mapping key value</description>
+        <type>Text</type>
+        <length>100</length>
+        <required>true</required>
+    </fields>
+    <fields>
+        <fullName>Icon_Name__c</fullName>
+        <label>Icon Name</label>
+        <description>SLDS icon name (e.g., standard:task, utility:success)</description>
+        <type>Text</type>
+        <length>100</length>
+        <required>false</required>
+    </fields>
+    <fields>
+        <fullName>Ui_Class__c</fullName>
+        <label>UI Class</label>
+        <description>CSS class for styling (e.g., slds-text-color_success)</description>
+        <type>Text</type>
+        <length>100</length>
+        <required>false</required>
+    </fields>
+    <fields>
+        <fullName>IsActive__c</fullName>
+        <label>Is Active</label>
+        <description>Indicates if this UI mapping is active</description>
+        <type>Checkbox</type>
+        <defaultValue>true</defaultValue>
+    </fields>
+</CustomObject>

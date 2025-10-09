@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+    <brand>
+        <headerColor>#0176D3</headerColor>
+        <shouldOverrideOrgTheme>false</shouldOverrideOrgTheme>
+    </brand>
+    <formFactors>Large</formFactors>
+    <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+    <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+    <label>Azure DevOps</label>
+    <description>Azure DevOps integration app (work item manager)</description>
+    <navType>Standard</navType>
+    <tabs>Azure_DevOps_Manager</tabs>
+    <tabs>Azure_DevOps</tabs>
+    <uiType>Lightning</uiType>
+</CustomApplication>

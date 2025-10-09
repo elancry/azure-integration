@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>Azure Field Mapping</label>
+    <pluralLabel>Azure Field Mappings</pluralLabel>
+    <visibility>Public</visibility>
+    <fields>
+        <fullName>Context__c</fullName>
+        <label>Context</label>
+        <description>Mapping context (e.g., create, update, sync)</description>
+        <type>Text</type>
+        <length>50</length>
+        <required>true</required>
+    </fields>
+    <fields>
+        <fullName>SObject__c</fullName>
+        <label>SObject</label>
+        <description>Salesforce object API name (e.g., Account, Case)</description>
+        <type>Text</type>
+        <length>100</length>
+        <required>false</required>
+    </fields>
+    <fields>
+        <fullName>Sf_Field__c</fullName>
+        <label>Salesforce Field</label>
+        <description>Salesforce field API name</description>
+        <type>Text</type>
+        <length>100</length>
+        <required>true</required>
+    </fields>
+    <fields>
+        <fullName>Ado_Field__c</fullName>
+        <label>Azure DevOps Field</label>
+        <description>Azure DevOps field path (e.g., System.Title, Microsoft.VSTS.Common.Priority)</description>
+        <type>Text</type>
+        <length>255</length>
+        <required>true</required>
+    </fields>
+    <fields>
+        <fullName>Work_Item_Type__c</fullName>
+        <label>Work Item Type</label>
+        <description>Specific work item type for this mapping (optional)</description>
+        <type>Text</type>
+        <length>100</length>
+        <required>false</required>
+    </fields>
+    <fields>
+        <fullName>Transform__c</fullName>
+        <label>Transform</label>
+        <description>Transformation to apply (ToString, ToInteger, Trim)</description>
+        <type>Picklist</type>
+        <required>false</required>
+        <valueSet>
+            <valueSetDefinition>
+                <value>
+                    <fullName>ToString</fullName>
+                    <default>false</default>
+                    <label>ToString</label>
+                </value>
+                <value>
+                    <fullName>ToInteger</fullName>
+                    <default>false</default>
+                    <label>ToInteger</label>
+                </value>
+                <value>
+                    <fullName>Trim</fullName>
+                    <default>false</default>
+                    <label>Trim</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>IsActive__c</fullName>
+        <label>Is Active</label>
+        <description>Indicates if this mapping is active</description>
+        <type>Checkbox</type>
+        <defaultValue>true</defaultValue>
+    </fields>
+</CustomObject>

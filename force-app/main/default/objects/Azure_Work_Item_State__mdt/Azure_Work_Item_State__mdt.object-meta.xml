@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>Azure Work Item State</label>
+    <pluralLabel>Azure Work Item States</pluralLabel>
+    <visibility>Public</visibility>
+    <fields>
+        <fullName>Description__c</fullName>
+        <label>Description</label>
+        <description>Description of this state</description>
+        <type>LongTextArea</type>
+        <length>1000</length>
+        <visibleLines>3</visibleLines>
+        <required>false</required>
+    </fields>
+    <fields>
+        <fullName>Ui_Class__c</fullName>
+        <label>UI Class</label>
+        <description>CSS class for styling (e.g., slds-text-color_success)</description>
+        <type>Text</type>
+        <length>100</length>
+        <required>false</required>
+    </fields>
+    <fields>
+        <fullName>Work_Item_Type__c</fullName>
+        <label>Work Item Type</label>
+        <description>Related work item type developer name</description>
+        <type>Text</type>
+        <length>100</length>
+        <required>true</required>
+    </fields>
+    <fields>
+        <fullName>IsActive__c</fullName>
+        <label>Is Active</label>
+        <description>Indicates if this state is active</description>
+        <type>Checkbox</type>
+        <defaultValue>true</defaultValue>
+    </fields>
+</CustomObject>

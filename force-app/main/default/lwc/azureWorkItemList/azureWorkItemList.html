@@ -1,0 +1,7 @@
+<template>
+    <lightning-card title="Work Items">
+        <div class="slds-p-around_medium">
+            <lightning-datatable key-field="id" data={workItems} columns={columns} onrowaction={handleRowAction} hide-checkbox-column></lightning-datatable>
+        </div>
+    </lightning-card>
+</template>
