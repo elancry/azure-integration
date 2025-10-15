@@ -1,19 +1,283 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+# Azure DevOps pipeline to validate and deploy Salesforce metadata via sfdx (SFDX Auth URL mode)
+# - PRs: Validate (mdapi check-only + tests)
+# - main: Deploy to DEV → QA → UAT (same creds unless you later split variables)
+# Prereqs: Add a secret pipeline variable SF_SFDX_AUTH_URL with your full force://PlatformCLI::... string.
+
+name: $(Date:yyyyMMdd)$(Rev:.r)
 
 trigger:
-- main
+  branches:
+    include:
+      - main
+
+pr:
+  branches:
+    include:
+      - '*'
+
+variables:
+  SF_LOGIN_URL: https://test.salesforce.com
+  SF_USERNAME: sahar.elancry@resourceful-wolf-ia1g7u.com
+  SOURCE_DIR: force-app
+  SKIP_SCRATCH_VALIDATE: 'true' # set to 'false' when you have a Dev Hub and want ScratchValidate
+  # SF_SFDX_AUTH_URL must be set as a secret variable in the pipeline UI
 
 pool:
   vmImage: ubuntu-latest
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+stages:
+  - stage: Validate
+    displayName: Validate (PR, mdapi check-only)
+    condition: or(eq(variables['Build.Reason'], 'PullRequest'), ne(variables['Build.SourceBranch'], 'refs/heads/main'))
+    jobs:
+      - job: validate
+        displayName: Check-only deploy + tests
+        steps:
+          - task: NodeTool@0
+            displayName: Use Node.js 20.x
+            inputs:
+              versionSpec: '20.x'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+          - script: |
+              npm install --global sfdx-cli
+              sfdx --version
+              sfdx plugins --core
+            displayName: Install sfdx CLI
+
+          - script: |
+              set -e
+              echo "Authenticating with SFDX Auth URL (no output shown)..."
+              # Write the secret URL to a file without printing it
+              echo "$SF_SFDX_AUTH_URL" > sfdxurl.txt
+              sfdx auth:sfdxurl:store -f sfdxurl.txt -a default
+              sfdx config:set defaultusername=$(SF_USERNAME) --global
+            displayName: Authenticate (SFDX Auth URL)
+            env:
+              SF_SFDX_AUTH_URL: $(SF_SFDX_AUTH_URL)
+
+          - script: |
+              mkdir -p mdapi_out
+              # Convert source to MDAPI using your manifest/package.xml
+              sfdx force:source:convert -r $(SOURCE_DIR) -x manifest/package.xml -d mdapi_out
+            displayName: Build MDAPI (package.xml)
+
+          - script: |
+              echo "MDAPI check-only deploy"
+              sfdx force:mdapi:deploy -d mdapi_out -c -l RunLocalTests -w 60
+            displayName: MDAPI check-only deploy
+
+          - script: |
+              mkdir -p test-results
+              sfdx force:apex:test:run -r junit -c -w 60 -d test-results
+            displayName: Run Apex tests (JUnit)
+
+          - task: PublishTestResults@2
+            displayName: Publish Apex test results
+            inputs:
+              testResultsFormat: JUnit
+              testResultsFiles: test-results/**/*.xml
+              failTaskOnFailedTests: true
+
+  - stage: ScratchValidate
+    displayName: Scratch Org Validation (mdapi)
+    condition: and(succeeded(), ne(variables['SKIP_SCRATCH_VALIDATE'], 'true'))
+    jobs:
+      - job: scratch
+        displayName: Create scratch, deploy mdapi, run tests, delete
+        steps:
+          - task: NodeTool@0
+            displayName: Use Node.js 20.x
+            inputs:
+              versionSpec: '20.x'
+
+          - script: |
+              npm install --global sfdx-cli
+              sfdx --version
+              sfdx plugins --core
+            displayName: Install sfdx CLI
+
+          # Dev Hub auth step (add your own auth here; skipped by default since SKIP_SCRATCH_VALIDATE=true)
+          - script: |
+              echo "Please add Dev Hub auth here if enabling this stage (JWT or SFDXURL)."
+              exit 1
+            displayName: Dev Hub auth placeholder
+
+          - script: |
+              echo "Creating scratch org from config/project-scratch-def.json"
+              sfdx force:org:create -f config/project-scratch-def.json -a scratch -s -d 1
+            displayName: Create scratch org
+
+          - script: |
+              mkdir -p mdapi_out
+              sfdx force:source:convert -r $(SOURCE_DIR) -x manifest/package.xml -d mdapi_out
+            displayName: Build MDAPI (package.xml)
+
+          - script: |
+              echo "MDAPI check-only deploy to scratch"
+              sfdx force:mdapi:deploy -u scratch -d mdapi_out -c -l RunLocalTests -w 60
+            displayName: MDAPI check-only deploy to scratch
+
+          - script: |
+              mkdir -p test-results
+              sfdx force:apex:test:run -u scratch -r junit -c -w 60 -d test-results
+            displayName: Run Apex tests (scratch)
+
+          - task: PublishTestResults@2
+            displayName: Publish Apex test results (scratch)
+            inputs:
+              testResultsFormat: JUnit
+              testResultsFiles: test-results/**/*.xml
+              failTaskOnFailedTests: true
+
+          - script: |
+              sfdx force:org:delete -u scratch -p
+            displayName: Delete scratch org
+
+  - stage: Deploy_DEV
+    displayName: Deploy to DEV (mdapi)
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+    jobs:
+      - job: deploy_dev
+        displayName: mdapi deploy to DEV
+        steps:
+          - task: NodeTool@0
+            displayName: Use Node.js 20.x
+            inputs:
+              versionSpec: '20.x'
+
+          - script: |
+              npm install --global sfdx-cli
+              sfdx --version
+              sfdx plugins --core
+            displayName: Install sfdx CLI
+
+          - script: |
+              set -e
+              echo "$SF_SFDX_AUTH_URL" > sfdxurl.txt
+              sfdx auth:sfdxurl:store -f sfdxurl.txt -a default
+              sfdx config:set defaultusername=$(SF_USERNAME) --global
+            displayName: Authenticate (SFDX Auth URL)
+            env:
+              SF_SFDX_AUTH_URL: $(SF_SFDX_AUTH_URL)
+
+          - script: |
+              mkdir -p mdapi_out
+              sfdx force:source:convert -r $(SOURCE_DIR) -x manifest/package.xml -d mdapi_out
+            displayName: Build MDAPI (package.xml)
+
+          - script: |
+              echo "MDAPI deploy (DEV)"
+              sfdx force:mdapi:deploy -d mdapi_out -l RunLocalTests -w 120
+            displayName: MDAPI deploy (DEV)
+
+          - script: |
+              mkdir -p test-results
+              sfdx force:apex:test:run -r junit -c -w 60 -d test-results
+            displayName: Run Apex tests (DEV)
+
+          - task: PublishTestResults@2
+            displayName: Publish Apex test results (DEV)
+            inputs:
+              testResultsFormat: JUnit
+              testResultsFiles: test-results/**/*.xml
+              failTaskOnFailedTests: true
+
+  - stage: Deploy_QA
+    displayName: Deploy to QA (mdapi)
+    dependsOn: Deploy_DEV
+    condition: succeeded()
+    jobs:
+      - job: deploy_qa
+        displayName: mdapi deploy to QA
+        steps:
+          - task: NodeTool@0
+            displayName: Use Node.js 20.x
+            inputs:
+              versionSpec: '20.x'
+
+          - script: |
+              npm install --global sfdx-cli
+              sfdx --version
+              sfdx plugins --core
+            displayName: Install sfdx CLI
+
+          - script: |
+              set -e
+              echo "$SF_SFDX_AUTH_URL" > sfdxurl.txt
+              sfdx auth:sfdxurl:store -f sfdxurl.txt -a default
+              sfdx config:set defaultusername=$(SF_USERNAME) --global
+            displayName: Authenticate (SFDX Auth URL)
+            env:
+              SF_SFDX_AUTH_URL: $(SF_SFDX_AUTH_URL)
+
+          - script: |
+              mkdir -p mdapi_out
+              sfdx force:source:convert -r $(SOURCE_DIR) -x manifest/package.xml -d mdapi_out
+            displayName: Build MDAPI (package.xml)
+
+          - script: |
+              echo "MDAPI deploy (QA)"
+              sfdx force:mdapi:deploy -d mdapi_out -l RunLocalTests -w 120
+            displayName: MDAPI deploy (QA)
+
+          - script: |
+              mkdir -p test-results
+              sfdx force:apex:test:run -r junit -c -w 60 -d test-results
+            displayName: Run Apex tests (QA)
+
+          - task: PublishTestResults@2
+            displayName: Publish Apex test results (QA)
+            inputs:
+              testResultsFormat: JUnit
+              testResultsFiles: test-results/**/*.xml
+              failTaskOnFailedTests: true
+
+  - stage: Deploy_UAT
+    displayName: Deploy to UAT (mdapi)
+    dependsOn: Deploy_QA
+    condition: succeeded()
+    jobs:
+      - job: deploy_uat
+        displayName: mdapi deploy to UAT
+        steps:
+          - task: NodeTool@0
+            displayName: Use Node.js 20.x
+            inputs:
+              versionSpec: '20.x'
+
+          - script: |
+              npm install --global sfdx-cli
+              sfdx --version
+              sfdx plugins --core
+            displayName: Install sfdx CLI
+
+          - script: |
+              set -e
+              echo "$SF_SFDX_AUTH_URL" > sfdxurl.txt
+              sfdx auth:sfdxurl:store -f sfdxurl.txt -a default
+              sfdx config:set defaultusername=$(SF_USERNAME) --global
+            displayName: Authenticate (SFDX Auth URL)
+            env:
+              SF_SFDX_AUTH_URL: $(SF_SFDX_AUTH_URL)
+
+          - script: |
+              mkdir -p mdapi_out
+              sfdx force:source:convert -r $(SOURCE_DIR) -x manifest/package.xml -d mdapi_out
+            displayName: Build MDAPI (package.xml)
+
+          - script: |
+              echo "MDAPI deploy (UAT)"
+              sfdx force:mdapi:deploy -d mdapi_out -l RunLocalTests -w 120
+            displayName: MDAPI deploy (UAT)
+
+          - script: |
+              mkdir -p test-results
+              sfdx force:apex:test:run -r junit -c -w 60 -d test-results
+            displayName: Run Apex tests (UAT)
+
+          - task: PublishTestResults@2
+            displayName: Publish Apex test results (UAT)
+            inputs:
+              testResultsFormat: JUnit
+              testResultsFiles: test-results/**/*.xml
+              failTaskOnFailedTests: true
