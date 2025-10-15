@@ -1,0 +1,36 @@
+name: $(Date:yyyyMMdd)$(Rev:.r)
+
+trigger: none
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  NODE_VERSION: '20.x'
+
+stages:
+  - stage: GenerateEpicWiki
+    displayName: Generate Epic Wiki
+    jobs:
+      - job: run
+        displayName: Run Epic Wiki Bot
+        steps:
+          - task: NodeTool@0
+            inputs:
+              versionSpec: $(NODE_VERSION)
+          - script: |
+              cd azure/epic-wiki-bot
+              npm ci || echo "no dependencies"
+              node src/index.js
+            displayName: Run bot
+            env:
+              EPIC_ID: $(EPIC_ID)
+              ADO_ORG: $(ADO_ORG)
+              ADO_PROJECT: $(ADO_PROJECT)
+              ADO_PAT: $(ADO_PAT)
+              ADO_WIKI_IDENTIFIER: $(ADO_WIKI_IDENTIFIER)
+              OPENAI_API_KEY: $(OPENAI_API_KEY)
+              OPENAI_MODEL: $(OPENAI_MODEL)
+              AZURE_OPENAI_ENDPOINT: $(AZURE_OPENAI_ENDPOINT)
+              AZURE_OPENAI_API_KEY: $(AZURE_OPENAI_API_KEY)
+              AZURE_OPENAI_DEPLOYMENT: $(AZURE_OPENAI_DEPLOYMENT)
